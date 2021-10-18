@@ -19,8 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9979a651-8c7e-4d99-ad26-1b07d1fd0979" name="Default Changelist" comment="+ tic_tac_toe_game">
+    <list default="true" id="9979a651-8c7e-4d99-ad26-1b07d1fd0979" name="Default Changelist" comment="change workspace.xml">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tic_tac_toe_game.py" beforeDir="false" afterPath="$PROJECT_DIR$/tic_tac_toe_game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tic_tac_toe_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/tic_tac_toe_tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,16 +57,49 @@
       <workItem from="1633899329923" duration="51000" />
       <workItem from="1633899399500" duration="162000" />
       <workItem from="1633960707566" duration="722000" />
+      <workItem from="1634388146319" duration="119000" />
+      <workItem from="1634488909972" duration="653000" />
+      <workItem from="1634567666233" duration="2921000" />
+      <workItem from="1634590418611" duration="3183000" />
     </task>
+    <task id="LOCAL-00001" summary="change workspace.xml">
+      <created>1634388250349</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1634388250349</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="change workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="change workspace.xml" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="92" y="92" width="1182" height="544" key="DiffContextDialog" timestamp="1634388266534">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="92" y="92" width="1182" height="544" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1634388266534" />
+    <state width="436" height="367" key="Git.Branch.Popup" timestamp="1634388165969">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="436" height="367" key="Git.Branch.Popup/0.0.1366.728@0.0.1366.728" timestamp="1634388165969" />
     <state width="1322" height="173" key="GridCell.Tab.0.bottom" timestamp="1634388127675">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -81,14 +116,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1322" height="173" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1634388127675" />
+    <state x="478" y="65" key="RollbackChangesDialog" timestamp="1634388233763">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="478" y="65" key="RollbackChangesDialog/0.0.1366.728@0.0.1366.728" timestamp="1634388233763" />
     <state x="184" y="0" key="SettingsEditor" timestamp="1633899516632">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="184" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1633899516632" />
-    <state x="275" y="95" key="Vcs.Push.Dialog.v2" timestamp="1634388114001">
+    <state x="92" y="92" width="1182" height="544" key="ShowDiffWithBranchDialog" timestamp="1634388266534">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="95" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1634388114001" />
+    <state x="92" y="92" width="1182" height="544" key="ShowDiffWithBranchDialog/0.0.1366.728@0.0.1366.728" timestamp="1634388266534" />
+    <state x="275" y="95" key="Vcs.Push.Dialog.v2" timestamp="1634388258522">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="95" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1634388258522" />
     <state x="492" y="276" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1634388096289">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

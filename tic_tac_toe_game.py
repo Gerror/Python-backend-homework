@@ -8,10 +8,11 @@ class TicTacToeGame:
     Класс для игры в крестики-нолики.
     """
 
-    def __init__(self):
-        self.board = list(range(1, 10))
-        self.current_player = 0
-        self.symbols = {0: "X", 1: "O"}
+    def __init__(self, board=None):
+        if board:
+            self.board = board
+        else:
+            self.board = list(range(1, 10))
 
     def show_board(self):
         """
@@ -36,60 +37,54 @@ class TicTacToeGame:
             current_input = int(current_input)
 
             if not 1 <= current_input <= 9:
-                raise ValueError("Invalid input. "
-                                 "Input must be a number from 1 to 9.")
+                raise ValueError("Input must be a number from 1 to 9.")
             current_input = current_input - 1
 
-            if self.board[current_input] in self.symbols.values():
-                raise ValueError("Invalid input. "
-                                 "The selected cell is already occupied")
+            if self.board[current_input] in ["X", "O"]:
+                raise ValueError("The selected cell is already occupied")
 
             return True
         except ValueError as error:
-            print(error)
+            print(f"Invalid input. {error}")
             return False
-
-    def set_cell(self, current_input):
-        """
-        Устанавливет символ в ячейку
-        :param current_input: Пользовательский ввод
-        :return: True, если удалось в выбранную клетку поставить соответствующий
-        пользователю символ и False иначе.
-        """
-        valid_input = self.validate_input(current_input)
-        if valid_input:
-            self.board[current_input - 1] = self.symbols[self.current_player]
-            return True
-        return False
 
     def start_game(self):
         """
         Запускает игру.
         """
-        self.show_board()
         there_is_winner = False
         step_counter = 0
-        while not there_is_winner and step_counter < 9:
+        current_player = 0
+        symbols = ["X", "O"]
+
+        self.show_board()
+        while not there_is_winner:
             step_counter += 1
             try:
                 print("Choose where to put "
-                      f"{self.symbols[self.current_player]}")
+                      f"{symbols[current_player]}")
 
-                cell_is_set = False
-                while not cell_is_set:
+                valid_input = False
+                current_input = None
+                while not valid_input:
                     current_input = input()
-                    cell_is_set = self.set_cell(int(current_input))
+                    valid_input = self.validate_input(current_input)
+
+                self.board[int(current_input) - 1] = symbols[current_player]
 
                 self.show_board()
-                if self.check_winner():
-                    there_is_winner = True
+                result = self.check_winner()
+                if result != "GameNotOver":
+                    if result != "Draw":
+                        print(f"Player {result} win")
+                    else:
+                        print(result)
                     break
-                self.current_player = (self.current_player + 1) % 2
+
+                current_player = (current_player + 1) % 2
             except KeyboardInterrupt:
                 print("End game")
                 break
-        if not there_is_winner:
-            print("Draw")
 
     def check_winner(self):
         """
@@ -104,9 +99,13 @@ class TicTacToeGame:
             if self.board[combination[0]] == \
                     self.board[combination[1]] == \
                     self.board[combination[2]]:
-                print(f"Player {self.symbols[self.current_player]} win")
-                return True
-        return False
+                return self.board[combination[0]]
+
+        for i in range(1, 10):
+            if i in self.board:
+                return "GameNotOver"
+
+        return "Draw"
 
 
 if __name__ == '__main__':
