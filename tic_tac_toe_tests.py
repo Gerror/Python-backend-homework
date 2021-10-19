@@ -11,6 +11,9 @@ class TestTicTacToeGame(unittest.TestCase):
         self.tic_tac_toe_game_draw = TicTacToeGame(["X", "O", "X",
                                                     "X", "O", "O",
                                                     "O", "X", "X"])
+        self.tic_tac_toe_game_double_set = TicTacToeGame(["X", "2", "3",
+                                                          "4", "5", "6",
+                                                          "7", "8", "9"])
 
     def test_valid_input(self):
         for i in range(1, 10):
@@ -26,6 +29,9 @@ class TestTicTacToeGame(unittest.TestCase):
     def test_check_winner(self):
         self.assertEqual(self.tic_tac_toe_game_win_x.check_winner(), "X")
         self.assertEqual(self.tic_tac_toe_game_draw.check_winner(), "Draw")
+
+    def test_double_set(self):
+        self.assertFalse(self.tic_tac_toe_game_double_set.validate_input("1"))
 
 
 if __name__ == '__main__':
