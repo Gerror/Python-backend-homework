@@ -53,13 +53,11 @@ class TicTacToeGame:
         Запускает игру.
         """
         there_is_winner = False
-        step_counter = 0
         current_player = 0
         symbols = ["X", "O"]
 
         self.show_board()
         while not there_is_winner:
-            step_counter += 1
             try:
                 print("Choose where to put "
                       f"{symbols[current_player]}")
