@@ -21,6 +21,7 @@ class TestTicTacToeGame(unittest.TestCase):
 
     def test_invalid_input(self):
         self.assertFalse(self.tic_tac_toe_game.validate_input("-1"))
+        self.assertFalse(self.tic_tac_toe_game.validate_input("0"))
         self.assertFalse(self.tic_tac_toe_game.validate_input("str"))
         self.assertFalse(self.tic_tac_toe_game.validate_input("1.42"))
         self.assertFalse(self.tic_tac_toe_game.validate_input("10"))
