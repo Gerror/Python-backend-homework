@@ -7,6 +7,7 @@ class TestCustomList(unittest.TestCase):
         self.custom_list_1 = CustomList([1, 2, 3])
         self.custom_list_2 = CustomList([7, 10, 12, 14])
         self.custom_list_3 = CustomList([4, 2])
+        self.custom_list_4 = CustomList([3, 4, 5])
 
     def test_add_list_and_custom_list(self):
         result = [2, 15, 5, 4] + self.custom_list_1
@@ -28,6 +29,12 @@ class TestCustomList(unittest.TestCase):
 
         list_sum = list(result)
         self.assertEqual(list_sum, [8, 12, 15, 14])
+
+        result = self.custom_list_1 + self.custom_list_4
+        self.assertTrue(type(result) is CustomList)
+
+        list_sum = list(result)
+        self.assertEqual(list_sum, [4, 6, 8])
 
     def test_sub_list_and_custom_list(self):
         result = [2, 15, 5, 4] - self.custom_list_1
