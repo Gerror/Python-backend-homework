@@ -17,15 +17,6 @@ class CustomList(list):
         for i, element in enumerate(self):
             self[i] = -1 * element
 
-    def sum_list_elements(self):
-        """
-        :return: Сумма элементов списка
-        """
-        sum_elements = 0
-        for element in self:
-            sum_elements += element
-        return sum_elements
-
     def __add__(self, other):
         big = self if len(self) >= len(other) else other
         small = self if len(self) < len(other) else other
@@ -48,22 +39,19 @@ class CustomList(list):
         return result
 
     def __lt__(self, other):
-        other_custom_list = CustomList(other)
-        if self.sum_list_elements() < other_custom_list.sum_list_elements():
-            return True
-        return False
+        return sum(self) < sum(other)
 
     def __le__(self, other):
         return self < other or self == other
 
     def __eq__(self, other):
-        return not self < other and not self > other
+        return sum(self) == sum(other)
 
     def __ne__(self, other):
         return not self == other
 
     def __gt__(self, other):
-        return other < self
+        return sum(self) > sum(other)
 
     def __ge__(self, other):
         return self > other or self == other
