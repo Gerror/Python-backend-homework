@@ -1,64 +1,100 @@
-from django.shortcuts import render
-from django.http.response import JsonResponse
-from django.http import HttpResponseNotAllowed
+from django.http.response import JsonResponse, HttpResponseBadRequest, HttpResponseNotFound
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
+from django.db.utils import IntegrityError
+from videos.models import Video
+from genres.models import Genre
 import json
 
-def create_video(request):
-    if request.method != "POST":
-        return HttpResponseNotAllowed(["POST"], "405 Method not allowed")
 
-    body_unicode = request.body.decode("utf-8")
-    body = json.loads(body_unicode)
+def validate_body(function):
+    def wrapper(request):
+        body_unicode = request.body.decode("utf-8")
+        try:
+            body = json.loads(body_unicode)
+        except json.decoder.JSONDecodeError as error:
+            return HttpResponseBadRequest(error)
 
-    result = {
-        "status": "ok",
-        "id": 123,
-    }
-    result.update(body)
+        if "title" not in body:
+            return HttpResponseBadRequest("Поле 'title' обязательно")
 
-    return JsonResponse(result, json_dumps_params={"ensure_ascii": False})
+        return function(request, body)
+    return wrapper
 
-def video_list(request):
-    if request.method != "GET":
-        return HttpResponseNotAllowed(["GET"], "405 Method not allowed")
+
+def create_or_update_video(body, video=None):
+    if not video:
+        video = Video()
+    video.title = body["title"]
+
+    if "description" in body:
+        video.description = body["description"]
+    if "year" in body:
+        video.year = body["year"]
+
+    try:
+        video.save()
+    except (ValueError, IntegrityError) as error:
+        return HttpResponseBadRequest(error)
+
+    if "genres" in body and isinstance(body["genres"], list):
+        video.genres.set([])
+        for genre_title in body["genres"]:
+            try:
+                genre = Genre.objects.get(title=genre_title)
+                video.genres.add(genre)
+            except Genre.DoesNotExist:
+                continue
 
     return JsonResponse({
-        "videos": [
-            {
-                "video_id": 123,
-                "title": "Гарри Поттер и философский камень",
-                "year": 2001
-            },
-            {
-                "video_id": 321,
-                "title": "Гарри Поттер и Тайная комната",
-                "year": 2002
-            },
-            {
-                "video_id": 213,
-                "title": "Гарри Поттер и узник Азкабана",
-                "year": 2004
-            }
-        ]
+        "status": "ok",
+        "id": video.id
     }, json_dumps_params={"ensure_ascii": False})
 
-def video_detail(request, video_id):
-    if request.method != "GET":
-        return HttpResponseNotAllowed(["GET"], "405 Method not allowed")
 
-    return JsonResponse(
-        {
-            "video_id": video_id,
-            "title": "Гарри Поттер и философский камень",
-            "description": "Гарри поступает в школу магии Хогвартс и заводит друзей. Первая часть большой франшизы о маленьком волшебнике",
-            "year": 2001,
-            "countries": [
-                "Великобритания",
-                "США"
-            ],
-            "genres": [
-                "фэнтези",
-                "приключения",
-                "семейный"
-            ]
-        }, json_dumps_params={"ensure_ascii": False})
+def get_video_data(video):
+    return {
+            "id": video.id,
+            "title": video.title,
+            "description": video.description,
+            "genres": [genre.title for genre in video.genres.all()]
+           }
+
+
+@require_POST
+@validate_body
+def create_video(request, body):
+    return create_or_update_video(body)
+
+
+@require_GET
+def video_list(request):
+    videos = Video.objects.all()
+    data = [
+        get_video_data(video) for video in videos
+    ]
+    return JsonResponse(data, json_dumps_params={"ensure_ascii": False}, safe=False)
+
+
+@require_GET
+def video_detail(request, video_id):
+    video = get_object_or_404(Video, id=video_id)
+    return JsonResponse(get_video_data(video), json_dumps_params={"ensure_ascii": False})
+
+
+@require_http_methods(["PUT"])
+@validate_body
+def update_video(request, body):
+    try:
+        video = Video.objects.get(title=body["title"])
+    except Video.DoesNotExist:
+        video = None
+    finally:
+        return create_or_update_video(body, video)
+
+
+@require_http_methods(["DELETE"])
+def delete_video(request, video_id):
+    video = get_object_or_404(Video, id=video_id)
+    video.delete()
+    return JsonResponse({"status": "ok"}, json_dumps_params={"ensure_ascii": False})
