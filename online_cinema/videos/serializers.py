@@ -10,10 +10,12 @@ class VideoSerializer(serializers.ModelSerializer):
     def create_or_update(self, validated_data, video=None):
         if not video:
             video = Video()
-
-        video.title = validated_data.get('title')
-        video.description = validated_data.get('description')
-        video.year = validated_data.get('year')
+        if validated_data.get('title'):
+            video.title = validated_data.get('title')
+        if validated_data.get('description'):
+            video.description = validated_data.get('description')
+        if validated_data.get('year'):
+            video.year = validated_data.get('year')
 
         video.save()
 
