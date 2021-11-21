@@ -17,8 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from application.views import index
 
+from rest_framework.routers import DefaultRouter
+from videos.views import VideoViewSet
+
+router = DefaultRouter()
+router.register(r'api/videos', VideoViewSet, basename='videos')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('videos/', include('videos.urls')),
     path('', index, name="index")
 ]
+
+urlpatterns += router.urls

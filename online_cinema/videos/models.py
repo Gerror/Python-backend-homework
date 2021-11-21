@@ -3,7 +3,7 @@ from django.urls import reverse
 from genres.models import Genre
 
 class Video(models.Model):
-    title = models.CharField(max_length=64, unique=True, verbose_name='Название видео')
+    title = models.CharField(max_length=64, verbose_name='Название видео')
     description = models.TextField(verbose_name='Описание видео')
     genres = models.ManyToManyField(Genre, verbose_name='Жанры')
     year = models.IntegerField(verbose_name='Год', default=None)
