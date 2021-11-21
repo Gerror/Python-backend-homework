@@ -8,7 +8,7 @@ import json
 
 
 def validate_body(function):
-    def wrapper(request):
+    def wrapper(request, *args, **kwars):
         body_unicode = request.body.decode("utf-8")
         try:
             body = json.loads(body_unicode)
@@ -18,7 +18,7 @@ def validate_body(function):
         if "title" not in body:
             return HttpResponseBadRequest("Поле 'title' обязательно")
 
-        return function(request, body)
+        return function(request, body, *args, **kwars)
     return wrapper
 
 
@@ -84,9 +84,9 @@ def video_detail(request, video_id):
 
 @require_http_methods(["PUT"])
 @validate_body
-def update_video(request, body):
+def update_video(request, body, video_id):
     try:
-        video = Video.objects.get(title=body["title"])
+        video = Video.objects.get(id=video_id)
     except Video.DoesNotExist:
         video = None
     finally:

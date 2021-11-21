@@ -7,5 +7,5 @@ urlpatterns = [
     path('list/', video_list, name="video_list"),
     path('create/', create_video, name="create_video"),
     path('delete/<int:video_id>/', delete_video, name="delete_video"),
-    path('update/', update_video, name="update_video")
+    path('update/<int:video_id>/', update_video, name="update_video")
 ]
