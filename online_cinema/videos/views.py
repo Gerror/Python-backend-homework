@@ -57,6 +57,7 @@ def get_video_data(video):
             "id": video.id,
             "title": video.title,
             "description": video.description,
+            "year": video.year,
             "genres": [genre.title for genre in video.genres.all()]
            }
 
@@ -85,10 +86,11 @@ def video_detail(request, video_id):
 @require_http_methods(["PUT"])
 @validate_body
 def update_video(request, body, video_id):
+    video = None
     try:
         video = Video.objects.get(id=video_id)
     except Video.DoesNotExist:
-        video = None
+        pass
     finally:
         return create_or_update_video(body, video)
 
