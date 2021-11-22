@@ -28,7 +28,7 @@ class VideoSerializer(serializers.ModelSerializer):
         return video
 
     def create(self, validated_data):
-        self.create_or_update(validated_data)
+        return self.create_or_update(validated_data)
 
     def update(self, instance, validated_data):
         return self.create_or_update(validated_data, instance)
