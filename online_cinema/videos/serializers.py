@@ -6,6 +6,7 @@ from genres.models import Genre
 
 class VideoSerializer(serializers.ModelSerializer):
     genres = GenreSerializer(many=True, required=False)
+    author = serializers.CharField(read_only=True)
 
     def create_or_update(self, validated_data, video=None):
         if not video:
@@ -16,6 +17,8 @@ class VideoSerializer(serializers.ModelSerializer):
             video.description = validated_data.get('description')
         if validated_data.get('year'):
             video.year = validated_data.get('year')
+
+        video.author = self.context['request'].user
 
         video.save()
 
@@ -43,5 +46,5 @@ class VideoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Video
-        fields = ['id', 'title', 'description', 'year', 'genres']
+        fields = ['id', 'title', 'description', 'year', 'author' ,'genres']
         read_only_fields = ['id']

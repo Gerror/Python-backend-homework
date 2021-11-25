@@ -31,3 +31,6 @@ class VideoViewSet(viewsets.ModelViewSet):
     @login_required
     def destroy(self, request, pk=None):
         return super(VideoViewSet, self).destroy(request, pk)
+
+    def get_queryset(self):
+        return Video.objects.filter(author=self.request.user)
