@@ -46,7 +46,29 @@ INSTALLED_APPS = [
     'genres',
     'users',
     'rest_framework',
+    'social_django',
 ]
+
+
+#Authentication and authorization
+
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = env('SOCIAL_AUTH_VK_OAUTH2_KEY')
+SOCIAL_AUTH_VK_OAUTH2_SECRET = env('SOCIAL_AUTH_VK_OAUTH2_SECRET')
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
+SOCIAL_AUTH_VK_OAUTH2_API_VERSION = '5.131'
+
+LOGIN_URL = 'login/'
+LOGIN_REDIRECT_URL='/'
+LOGOUT_URL = 'logout/'
+LOGOUT_REDIRECT_URL='/'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.vk.VKOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
