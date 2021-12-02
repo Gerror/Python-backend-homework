@@ -32,6 +32,32 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.0.103']
 
+# Email
+
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
+# administrator list
+ADMINS = [env('EMAIL_ADMIN')]
+
+# Celery conf
+CELERY_TIMEZONE = "Europe/Moscow"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+
+CELERY_BEAT_SCHEDULE  = {
+    'users_check_count': {
+        'task': 'users.tasks.check_count',
+        'schedule': 5 * 60,
+    },
+}
+CHECK_COUNT_RESULT_PATH = os.path.join(BASE_DIR, 'check_count_result.txt')
 
 # Application definition
 
@@ -46,7 +72,9 @@ INSTALLED_APPS = [
     'genres',
     'users',
     'rest_framework',
+    'django_celery_results',
     'social_django',
+    'celery',
 ]
 
 

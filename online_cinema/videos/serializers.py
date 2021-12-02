@@ -2,6 +2,7 @@ from videos.models import Video
 from rest_framework import serializers
 from genres.serializers import GenreSerializer
 from genres.models import Genre
+from videos.tasks import create_video
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -31,7 +32,9 @@ class VideoSerializer(serializers.ModelSerializer):
         return video
 
     def create(self, validated_data):
-        return self.create_or_update(validated_data)
+        video = self.create_or_update(validated_data)
+        create_video.delay(video.title)
+        return video
 
     def update(self, instance, validated_data):
         return self.create_or_update(validated_data, instance)

@@ -10,7 +10,7 @@ class Video(models.Model):
     description = models.TextField(verbose_name='Описание видео')
     genres = models.ManyToManyField(Genre, verbose_name='Жанры')
     year = models.IntegerField(verbose_name='Год', default=None)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return self.title
